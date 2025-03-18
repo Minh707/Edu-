@@ -60,35 +60,35 @@
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
         }
         .notification {
-        display: none;
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #ff4d4d;
-        color: white;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff4d4d;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
         }
-
         .table-container {
             margin: 5px;
-            overflow-x: auto; /* Giữ cuộn ngang nếu cần */
+            overflow-x: auto;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             background-color: white;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            table-layout: fixed; /* Ensure fixed table layout for consistent column widths */
         }
         th, td {
             border: 1px solid #ddd;
             padding: 6px;
             text-align: center;
             font-size: 12px;
-            white-space: nowrap; /* Ngăn văn bản xuống dòng */
+            white-space: nowrap;
         }
         th {
             background-color: #007bff;
@@ -97,6 +97,12 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        /* Set fixed widths for columns to ensure consistency */
+        th:nth-child(1), td:nth-child(1) { width: 20%; } /* Môn học */
+        th:nth-child(2), td:nth-child(2) { width: 30%; } /* Điểm thường xuyên */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Điểm giữa kỳ */
+        th:nth-child(4), td:nth-child(4) { width: 15%; } /* Điểm cuối kỳ */
+        th:nth-child(5), td:nth-child(5) { width: 20%; } /* ĐTB học kỳ */
 
         /* Responsive Design cho điện thoại */
         @media (max-width: 600px) {
@@ -115,10 +121,9 @@
             .dropdown select {
                 font-size: 12px;
                 padding: 4px;
-                
             }
             table, thead, tbody, th, td, tr {
-                display: block; /* Chuyển bảng thành block để stack */
+                display: block;
             }
             thead tr {
                 position: absolute;
@@ -132,12 +137,12 @@
             td {
                 border: none;
                 position: relative;
-                padding-left: 50%; /* Tạo không gian cho label */
+                padding-left: 50%;
                 text-align: left;
                 font-size: 10px;
             }
             td:before {
-                content: attr(data-label); /* Sử dụng data-label để hiển thị tiêu đề cột */
+                content: attr(data-label);
                 position: absolute;
                 left: 10px;
                 width: 45%;
@@ -272,29 +277,30 @@
         const semesterData = {
             "11A9": {
                 1: [
-                    { subject: "Toán học", scores: ["5 4 9 3"], mid: "5.5", final: "5.1", avg: "5.3" },
-                    { subject: "Vật lý", scores: ["8 4 6"], mid: "5.1", final: "6.5", avg: "6" },
-                    { subject: "Sinh học", scores: ["9 8 7"], mid: "6.6", final: "7.3", avg: "7.4" },
-                    { subject: "Tin học", scores: ["9 10 10"], mid: "8", final: "9.5", avg: "9.4" },
-                    { subject: "Ngữ văn", scores: ["5.5 7.8 6 8.3"], mid: "5.5", final: "5.8", avg: "6.2" },
-                    { subject: "Lịch sử", scores: ["10 10 9"], mid: "6", final: "6.5", avg: "7.6" },
-                    { subject: "Tiếng anh", scores: ["7 7.5 6.5 8"], mid: "8.3", final: "6.5", avg: "7.2" },
+                    { subject: "Toán học", scores: ["5", "4", "9", "3"], mid: "5.5", final: "5.1", avg: "5.3" },
+                    { subject: "Vật lý", scores: ["8", "4", "6"], mid: "5.1", final: "6.5", avg: "6" },
+                    { subject: "Sinh học", scores: ["9", "8", "7"], mid: "6.6", final: "7.3", avg: "7.4" },
+                    { subject: "Tin học", scores: ["9", "10", "10"], mid: "8", final: "9.5", avg: "9.4" },
+                    { subject: "Ngữ văn", scores: ["5.5", "7.8", "6", "8.3"], mid: "5.5", final: "5.8", avg: "6.2" },
+                    { subject: "Lịch sử", scores: ["10", "10", "9"], mid: "6", final: "6.5", avg: "7.6" },
+                    { subject: "Tiếng anh", scores: ["7", "7.5", "6.5", "8"], mid: "8.3", final: "6.5", avg: "7.2" },
                     { subject: "Giáo dục KTPL", scores: ["Đ"], mid: "Đ", final: "Đ", avg: "Đ" },
                     { subject: "Giáo dục quốc phòng", scores: ["Đ"], mid: "Đ", final: "Đ", avg: "Đ" }
                 ],
                 2: [
-                    { subject: "Toán học", scores: ["6 5 8"], mid: "", final: "", avg: "" },
-                    { subject: "Vật lý", scores: ["7 5"], mid: "", final: "", avg: "" },
-                    { subject: "Sinh học", scores: ["8 7"], mid: "7", final: "", avg: "" },
+                    { subject: "Toán học", scores: ["6", "5", "8"], mid: "", final: "", avg: "" },
+                    { subject: "Vật lý", scores: ["7", "5"], mid: "", final: "", avg: "" },
+                    { subject: "Sinh học", scores: ["8", "7"], mid: "7", final: "", avg: "" },
                     { subject: "Tin học", scores: ["10"], mid: "7", final: "", avg: "" },
-                    { subject: "Ngữ văn", scores: ["6 7"], mid: "6.5", final: "", avg: "" },
-                    { subject: "Lịch sử", scores: ["9 8 7"], mid: "7.5", final: "", avg: "" },
-                    { subject: "Tiếng anh", scores: ["8 6.5 7"], mid: "", final: "", avg: "" },
+                    { subject: "Ngữ văn", scores: ["6", "7"], mid: "6.5", final: "", avg: "" },
+                    { subject: "Lịch sử", scores: ["9", "8", "7"], mid: "7.5", final: "", avg: "" },
+                    { subject: "Tiếng anh", scores: ["8", "6.5", "7"], mid: "", final: "", avg: "" },
                     { subject: "Giáo dục KTPL", scores: ["Đ"], mid: "Đ", final: "", avg: "" },
                     { subject: "Giáo dục quốc phòng", scores: ["Đ"], mid: "Đ", final: "", avg: "" }
                 ]
             }
         };
+
         function showNotification(message) {
             const notification = document.getElementById("notification");
             notification.textContent = message;
@@ -322,14 +328,31 @@
                 return;
             }
 
+            // Determine the maximum number of scores in "Điểm thường xuyên" across both semesters
+            const maxScores = Math.max(
+                ...semesterData[classSelect][1].map(row => row.scores.length),
+                ...semesterData[classSelect][2].map(row => row.scores.length)
+            );
+
             semesterData[classSelect][semester].forEach(row => {
+                // Pad the scores array to match the maximum length
+                const paddedScores = [...row.scores];
+                while (paddedScores.length < maxScores) {
+                    paddedScores.push("-");
+                }
+
+                // Replace empty mid, final, and avg with "-"
+                const mid = row.mid || "-";
+                const final = row.final || "-";
+                const avg = row.avg || "-";
+
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                     <td data-label="Môn học">${row.subject}</td>
-                    <td data-label="Điểm thường xuyên">${row.scores.join(" ")}</td>
-                    <td data-label="Điểm giữa kỳ">${row.mid}</td>
-                    <td data-label="Điểm cuối kỳ">${row.final}</td>
-                    <td data-label="ĐTB học kỳ">${row.avg}</td>
+                    <td data-label="Điểm thường xuyên">${paddedScores.join(" ")}</td>
+                    <td data-label="Điểm giữa kỳ">${mid}</td>
+                    <td data-label="Điểm cuối kỳ">${final}</td>
+                    <td data-label="ĐTB học kỳ">${avg}</td>
                 `;
                 tbody.appendChild(tr);
             });
