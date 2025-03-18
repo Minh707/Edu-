@@ -59,6 +59,20 @@
             border-color: #00b7eb;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
         }
+        .notification {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ff4d4d;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        }
+
         .table-container {
             margin: 5px;
             overflow-x: auto; /* Giữ cuộn ngang nếu cần */
@@ -101,6 +115,7 @@
             .dropdown select {
                 font-size: 12px;
                 padding: 4px;
+                
             }
             table, thead, tbody, th, td, tr {
                 display: block; /* Chuyển bảng thành block để stack */
@@ -140,6 +155,7 @@
     </style>
 </head>
 <body>
+    <div class="notification" id="notification">Lỗi: Dữ liệu cho lớp không tồn tại!</div>
     <div class="header">
         KẾT QUẢ HỌC TẬP
     </div>
@@ -270,7 +286,7 @@
                     { subject: "Toán học", scores: ["6 5 8"], mid: "", final: "", avg: "" },
                     { subject: "Vật lý", scores: ["7 5"], mid: "", final: "", avg: "" },
                     { subject: "Sinh học", scores: ["8 7"], mid: "7", final: "", avg: "" },
-                    { subject: "Tin học", scores: ["10"], mid: "8.5", final: "", avg: "" },
+                    { subject: "Tin học", scores: ["10"], mid: "7", final: "", avg: "" },
                     { subject: "Ngữ văn", scores: ["6 7"], mid: "6.5", final: "", avg: "" },
                     { subject: "Lịch sử", scores: ["9 8 7"], mid: "7.5", final: "", avg: "" },
                     { subject: "Tiếng anh", scores: ["8 6.5 7"], mid: "", final: "", avg: "" },
@@ -279,18 +295,21 @@
                 ]
             }
         };
+        function showNotification(message) {
+            const notification = document.getElementById("notification");
+            notification.textContent = message;
+            notification.style.display = "block";
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 3000);
+        }
 
         function updateClass() {
             const classSelect = document.getElementById("classSelect").value;
-            const semesterSelect = document.getElementById("semesterSelect");
-
             if (classSelect !== "11A9") {
-                alert("Lỗi: Dữ liệu cho lớp " + classSelect + " không tồn tại!");
+                showNotification("Lỗi: Dữ liệu cho lớp " + classSelect + " không tồn tại!");
                 document.getElementById("classSelect").value = "11A9";
-                updateTable();
-                return;
             }
-            updateTable();
         }
 
         function updateTable() {
